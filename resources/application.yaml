@@ -1,0 +1,16 @@
+spring:
+  datasource:
+    # Default: in-memory H2 so it runs with zero setup. For Postgres set:
+    # DB_URL=jdbc:postgresql://localhost:5432/catalog DB_USER=... DB_PASS=...
+    url: ${DB_URL:jdbc:h2:mem:catalog;DB_CLOSE_DELAY=-1}
+    username: ${DB_USER:sa}
+    password: ${DB_PASS:}
+    hikari:
+      maximum-pool-size: 20
+  jpa:
+    hibernate.ddl-auto: update   # use Flyway migrations in production
+    open-in-view: false
+  cache:
+    type: caffeine
+    cache-names: products
+    caffeine.spec: maximumSize=100000,expireAfterWrite=60s
